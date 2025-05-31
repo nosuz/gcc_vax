@@ -61,7 +61,16 @@ Dev containerでは、VSCodeの設定と機能拡張がリセットされます�
 
 初期設定では、[Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)と[Git Graph](https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph)がインストールされます。
 
-## GitHub access
+## Git
+
+editorが設定されていないため、コマンドラインから`git commit --amend`など編集が必要な操作ができません。そこで、`.bit/config`に`editor`の設定を加えます。
+
+```
+[core]
+	editor = code --wait
+```
+
+### GitHub access
 
 GitHubは、特別な設定無く使用できると思います。次のコマンドでGitHubへの接続を確認できます。
 
