@@ -24,20 +24,27 @@ code .
 ```
 
 2. 必要なパッケージをインストールするように Dockerfile を編集してください。
-3. VSCode を起動してこのディレクトリを開き、のコマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
+3. このディレクトリをVSCode で開き、コマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
 
 ### When the UID is not 1000
 
 このコンテナは、UID が 1000、GID が 1000 のユーザでの実行を想定しています。
 
-UID と GID のいずれか、または両方が異なる場合は、UID と GID を`.devcontainer/.env`に設定してください。UID と GID は、`id`コマンドで確認できます。
+UID と GID のいずれか、または両方が想定と異なる場合は、UID と GID を`.devcontainer/.env`に設定してください。`.env`の形式は次のようになります。
 
 ```
 UID=1001
 GID=1001
 ```
 
-また、`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.py`を実行することで、`.env`を作成することができます。
+自分のUID と GID は、`id`コマンドで確認できます。
+
+```
+$ id
+uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu)
+```
+
+また`.env`は、`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.py`を実行することで作成することができます。
 
 _UID (GID)の変更対応については、[Docker や VSCode + Remote-Container のパーミッション問題に立ち向かう](https://zenn.dev/forrep/articles/8c0304ad420c8e)を参考にしました。_
 
@@ -61,7 +68,7 @@ Dev container では、VSCode の設定と機能拡張がリセットされま�
 
 ## Git
 
-editor が設定されていないため、コマンドラインから`git commit --amend`など編集が必要な操作ができません。そこで、`.bit/config`に`editor`の設定を加えます。
+editor が設定されていないため、コマンドラインから`git commit --amend`など編集が必要な操作ができません。そこで、`.git/config`に`editor`の設定を加えます。
 
 ```
 [core]
