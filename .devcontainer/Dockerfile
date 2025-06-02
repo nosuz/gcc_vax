@@ -3,7 +3,7 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
-    && apt-get install -y git \
+    && apt-get install --no-install-recommends -y git \
     && apt-get clean \
     && rm -rf /var/lib/apt-get/lists/*
 
