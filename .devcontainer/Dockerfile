@@ -9,6 +9,8 @@ ARG USERNAME=vscode
 ARG UID=10000
 ARG GID=$UID
 
+ENV LANG=ja_JP.UTF-8
+
 # Remove user if already exist and create new user.
 RUN set -eux; \
     if getent passwd "${UID}" > /dev/null; then \
