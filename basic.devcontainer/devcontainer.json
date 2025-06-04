@@ -1,9 +1,15 @@
 {
   "name": "DevContainer",
-  "workspaceFolder": "/workspaces",
-  // UID and GID is imported from .env file.
+  // uncomment if use as root.
+  // "remoteUser": "root",
+
+  // Select either "build" or "dockerComposeFile" with "service".
+  // "build": { "dockerfile": "Dockerfile" },
+  // or
   "dockerComposeFile": "compose.yaml",
   "service": "app",
+
+  "workspaceFolder": "/workspaces",
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
 

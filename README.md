@@ -23,14 +23,22 @@ code .
 # Edit .devcontainer/Dockerfile to install required APT packages before rebuilding this container.
 ```
 
-2. 必要なパッケージをインストールするように Dockerfile を編集してください。
-3. このディレクトリを VSCode で開き、コマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
+2. オプション：`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.sh`を実行して USER ID を`.devcontainer/.env`に書き込んでおいてください。このオプションを実行することで、Python のライブラリーのようにユーザ権限でインストールされるファイルがある場合に、docker image の作成に必要な時間が短くなり、イメージのサイズが小さくなります。
+
+```
+bash .devcontainer/generate_env.sh
+# or
+python .devcontainer/generate_env.py
+```
+
+3. 必要なパッケージをインストールするように Dockerfile を編集してください。
+4. このディレクトリを VSCode で開き、コマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
 
 ### user name and id
 
-このコンテナは、コンテナを開いたユーザと同じIDで実行されます。そのため権限の問題なしにディレクトリを共有できます。ただしコンテナ内のユーザ名は、`vscode`となり、`ls -l`で共有ディレクトリを見るとユーザ名が元と変わって`vscode`になります。
+このコンテナは、コンテナを開いたユーザと同じ ID で実行されます。そのため権限の問題なしにディレクトリを共有できます。ただしコンテナ内のユーザ名は、`vscode`となり、`ls -l`で共有ディレクトリを見るとユーザ名が元と変わって`vscode`になります。
 
-また、`.devcontainer/devcontainer.json`の`remoteUser`で`root`を指定した場合には、root権限で実行されます。
+また、`.devcontainer/devcontainer.json`の`remoteUser`で`root`を指定した場合には、root 権限で実行されます。
 
 ## VSCode settings and extensions
 
@@ -77,3 +85,7 @@ Hi nosuz! You've successfully authenticated, but GitHub does not provide shell a
 ```bash
 for i in $(docker image ls | awk '$1 == "<none>" && $2 == "<none>" { print $3 }'); do echo $i; docker image rm $i; done
 ```
+
+## 参考
+
+- [Docker や VSCode + Remote-Container のパーミッション問題に立ち向かう](https://zenn.dev/forrep/articles/8c0304ad420c8e)

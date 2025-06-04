@@ -11,7 +11,7 @@ ENV LANG=ja_JP.UTF-8
 #ENV LC_CTYPE=ja_JP.UTF-8
 
 ARG USERNAME=vscode
-ARG UID=10000
+ARG UID=1000
 ARG GID=$UID
 
 # Remove user if already exist and create new user.
@@ -27,6 +27,7 @@ RUN set -eux; \
     groupadd --gid "${GID}" "${USERNAME}"; \
     useradd --uid "${UID}" --gid "${GID}" -s /bin/bash -m "${USERNAME}"
 
+# enable sudo command
 # RUN apt-get update \
 #     && apt-get install -y sudo \
 #     && apt-get clean \
@@ -34,6 +35,7 @@ RUN set -eux; \
 #     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
 #     && chmod 0440 /etc/sudoers.d/$USERNAME
 
+# install packages
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
