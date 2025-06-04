@@ -27,6 +27,7 @@ RUN set -eux; \
     groupadd --gid "${GID}" "${USERNAME}"; \
     useradd --uid "${UID}" --gid "${GID}" -s /bin/bash -m "${USERNAME}"
 
+# enable sudo
 # RUN apt-get update \
 #     && apt-get install -y sudo \
 #     && apt-get clean \
