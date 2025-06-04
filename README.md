@@ -26,27 +26,11 @@ code .
 2. 必要なパッケージをインストールするように Dockerfile を編集してください。
 3. このディレクトリを VSCode で開き、コマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
 
-### When the UID is not 1000
+### user name and id
 
-このコンテナは、UID が 1000、GID が 1000 のユーザでの実行を想定しています。
+このコンテナは、コンテナを開いたユーザと同じIDで実行されます。そのため権限の問題なしにディレクトリを共有できます。ただしコンテナ内のユーザ名は、`vscode`となり、`ls -l`で共有ディレクトリを見るとユーザ名が元と変わって`vscode`になります。
 
-UID と GID のいずれか、または両方が想定と異なる場合は、UID と GID を`.devcontainer/.env`に設定してください。`.env`の形式は次のようになります。
-
-```
-UID=1001
-GID=1001
-```
-
-自分の UID と GID は、`id`コマンドで確認できます。
-
-```
-$ id
-uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu)
-```
-
-また、この`.env`は、`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.py`を実行することで作成することができます。
-
-_UID (GID)の変更対応については、[Docker や VSCode + Remote-Container のパーミッション問題に立ち向かう](https://zenn.dev/forrep/articles/8c0304ad420c8e)を参考にしました。_
+また、`.devcontainer/devcontainer.json`の`remoteUser`で`root`を指定した場合には、root権限で実行されます。
 
 ## VSCode settings and extensions
 
@@ -79,7 +63,7 @@ editor が設定されていないため、コマンドラインから`git commi
 
 ### GitHub access
 
-GitHub は、特別な設定無く使用できると思います。次のコマンドで GitHub への接続を確認できます。
+GitHub は、`ssh`パッケージをインストールしてあれば他に特別な設定無く使用できると思います。次のコマンドで GitHub への接続を確認できます。
 
 ```
 $ ssh -T git@github.com
