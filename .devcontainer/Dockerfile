@@ -1,8 +1,18 @@
+# syntax=docker/dockerfile:1.4
+# enable here documents.
+# RUN cat <<EOF >> /home/vscode/.bashrc
+#
+# EOF
+
 FROM ubuntu:latest
 
 ARG USERNAME=vscode
 ARG UID=10000
 ARG GID=$UID
+
+ENV LANG=ja_JP.UTF-8
+#ENV LC_ALL=ja_JP.UTF-8
+#ENV LC_CTYPE=ja_JP.UTF-8
 
 # Remove users and create new user before installing packages
 # because new users may created by installing package.
