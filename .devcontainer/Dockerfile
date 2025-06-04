@@ -3,7 +3,9 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y git \
+    && apt-get install --no-install-recommends -y \
+    # ssh is required to handle GitHub in the container
+    git ssh \
     && apt-get clean \
     && rm -rf /var/lib/apt-get/lists/*
 
