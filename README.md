@@ -24,7 +24,7 @@ code .
 ```
 
 2. 必要なパッケージをインストールするように Dockerfile を編集してください。
-3. このディレクトリをVSCode で開き、コマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
+3. このディレクトリを VSCode で開き、コマンドパレット(Ctrl + Shift + P)で Dev Containers: Rebuild container を実行すると、コンテナイメージが作成されて接続されます。
 
 ### When the UID is not 1000
 
@@ -37,14 +37,14 @@ UID=1001
 GID=1001
 ```
 
-自分のUID と GID は、`id`コマンドで確認できます。
+自分の UID と GID は、`id`コマンドで確認できます。
 
 ```
 $ id
 uid=1000(ubuntu) gid=1000(ubuntu) groups=1000(ubuntu)
 ```
 
-また`.env`は、`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.py`を実行することで作成することができます。
+また、この`.env`は、`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.py`を実行することで作成することができます。
 
 _UID (GID)の変更対応については、[Docker や VSCode + Remote-Container のパーミッション問題に立ち向かう](https://zenn.dev/forrep/articles/8c0304ad420c8e)を参考にしました。_
 
@@ -75,6 +75,8 @@ editor が設定されていないため、コマンドラインから`git commi
 	editor = code --wait
 ```
 
+ローカルの`~/.gitconfig`に設定がある場合は、デフォルト設定ではこのファイルがコピーされるのでコンテナ毎の設定は不要です。
+
 ### GitHub access
 
 GitHub は、特別な設定無く使用できると思います。次のコマンドで GitHub への接続を確認できます。
@@ -82,4 +84,12 @@ GitHub は、特別な設定無く使用できると思います。次のコマ�
 ```
 $ ssh -T git@github.com
 Hi nosuz! You've successfully authenticated, but GitHub does not provide shell access.
+```
+
+## Docker Images
+
+古いイメージは、次のコマンドで一括削除できます。
+
+```bash
+for i in $(docker image ls | awk '$1 == "<none>" && $2 == "<none>" { print $3 }'); do echo $i; docker image rm $i; done
 ```
