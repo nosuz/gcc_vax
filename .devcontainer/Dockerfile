@@ -6,9 +6,11 @@
 
 FROM ubuntu:latest
 
+# Set locale and timezone
 ENV LANG=ja_JP.UTF-8
-#ENV LC_ALL=ja_JP.UTF-8
-#ENV LC_CTYPE=ja_JP.UTF-8
+ENV LC_ALL=ja_JP.UTF-8
+ENV LC_CTYPE=ja_JP.UTF-8
+ENV TZ=Asia/Tokyo
 
 ARG USERNAME=vscode
 ARG UID=10000
@@ -37,12 +39,23 @@ RUN set -eux; \
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Install packages
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
+    # Basic tools
     # ssh is required to handle GitHub in the container
     git ssh \
+    # System tools
+    locales tzdata \
+    # Clean up
     && apt-get clean \
-    && rm -rf /var/lib/apt-get/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    # Configure locale
+    && locale-gen ja_JP.UTF-8 \
+    && update-locale LANG=ja_JP.UTF-8 \
+    # Configure timezone
+    && ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
+    && dpkg-reconfigure -f noninteractive tzdata
 
 # Default user
 USER vscode
