@@ -17,8 +17,7 @@ ARG UID=10000
 ARG GID=$UID
 
 # Setup user and group id
-# Remove users and create new user before installing packages
-# because new users may created by installing package.
+# Remove all general users and create a new user for USER direction.
 RUN set -eux; \
     for i in $(awk -F: '$3 >= 1000 && $3 <= 60000 { print $1 }' /etc/passwd); do \
         userdel $i; \
