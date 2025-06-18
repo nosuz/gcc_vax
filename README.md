@@ -8,6 +8,12 @@ VSCode の dev container を使用するための雛形です。
 sudo apt install docker.io docker-buildx docker-compose-v2
 ```
 
+### add user
+
+```bash
+sudo usermod -aG docker $USER
+```
+
 ### clone boilerplate files
 
 1. このレポジトリを次のコマンドでクローンしてください。
