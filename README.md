@@ -4,7 +4,7 @@ VSCode の dev container を使用するための雛形です。
 
 ### pre-required packages
 
-```
+```bash
 sudo apt install docker.io docker-buildx docker-compose-v2
 ```
 
@@ -12,7 +12,7 @@ sudo apt install docker.io docker-buildx docker-compose-v2
 
 1. このレポジトリを次のコマンドでクローンしてください。
 
-```
+```bash
 git clone https://github.com/nosuz/dev_container.git
 cd dev_container
 rm -r .git
@@ -25,7 +25,7 @@ code .
 
 2. オプション：`.devcontainer/generate_env.sh`または`.devcontainer/generate_env.sh`を実行して USER ID を`.devcontainer/.env`に書き込んでおいてください。このオプションを実行することで、Python のライブラリーのようにユーザ権限でインストールされるファイルがある場合に、docker image の作成に必要な時間が短くなり、イメージのサイズが小さくなります。
 
-```
+```bash
 bash .devcontainer/generate_env.sh
 # or
 python .devcontainer/generate_env.py
@@ -64,7 +64,7 @@ editor が設定されていないため、コマンドラインから`git commi
 
 ```
 [core]
-	editor = code --wait
+ editor = code --wait
 ```
 
 ローカルの`~/.gitconfig`に設定がある場合は、デフォルト設定ではこのファイルがコピーされるのでコンテナ毎の設定は不要です。
@@ -73,7 +73,7 @@ editor が設定されていないため、コマンドラインから`git commi
 
 GitHub は、`ssh`パッケージをインストールしてあれば他に特別な設定無く使用できると思います。次のコマンドで GitHub への接続を確認できます。
 
-```
+```command
 $ ssh -T git@github.com
 Hi nosuz! You've successfully authenticated, but GitHub does not provide shell access.
 ```
