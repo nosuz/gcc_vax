@@ -22,13 +22,16 @@ ARG GID=$UID
 # Remove all general users and create a new user for USER direction.
 RUN set -eux; \
     for i in $(awk -F: '$3 >= 1000 && $3 <= 60000 { print $1 }' /etc/passwd); do \
-        userdel $i; \
+    userdel $i; \
     done; \
     for i in $(awk -F: '$3 >= 1000 && $3 <= 60000 { print $1 }' /etc/passwd); do \
-        groupdel $i; \
+    groupdel $i; \
     done; \
     groupadd --gid "${GID}" "${USERNAME}"; \
     useradd --uid "${UID}" --gid "${GID}" -s /bin/bash -m "${USERNAME}"
+
+# Install packages
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Enable sudo
 # RUN --mount=type=cache,target=/var/cache/apt \
@@ -37,9 +40,6 @@ RUN set -eux; \
 #     && apt-get install -y sudo \
 #     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
 #     && chmod 0440 /etc/sudoers.d/$USERNAME
-
-# Install packages
-ENV DEBIAN_FRONTEND=noninteractive
 
 # https://github.com/moby/buildkit/issues/1662#issuecomment-683962222
 RUN --mount=type=cache,target=/var/cache/apt \
