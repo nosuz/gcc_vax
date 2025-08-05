@@ -27,6 +27,7 @@ RUN set -eux; \
     for i in $(awk -F: '$3 >= 1000 && $3 <= 60000 { print $1 }' /etc/passwd); do \
     groupdel $i; \
     done; \
+    rm -rf /home/*; \
     groupadd --gid "${GID}" "${USERNAME}"; \
     useradd --uid "${UID}" --gid "${GID}" -s /bin/bash -m "${USERNAME}"
 
