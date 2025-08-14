@@ -38,7 +38,7 @@ $(LST): $(ELF)
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-%.o: %.S
+%.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<
 
 clean:
