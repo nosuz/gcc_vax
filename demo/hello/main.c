@@ -17,12 +17,15 @@ int puts(const char *str) {
 
     const char *p = str;
     while (*p) {
-        putc(*p);
+        if (*p == '\n') {
+            putc('\r');  /* 先にCRを出力 */
+            putc('\n');  /* 次にLFを出力 */
+        } else {
+            putc(*p);
+        }
         p++;
     }
 
-    /* Add newline */
-    putc('\n');
     return 1;
 }
 

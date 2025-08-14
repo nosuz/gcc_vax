@@ -18,7 +18,6 @@ VAX780 simulator V3.8-1
 Logging to file "demo.log"
 Hello
 Hello from VAX-11 bare-metal!
-
 HALT instruction, PC: 00001026 (BRB 1025)
 sim> [Ctrl-C]
 ```
