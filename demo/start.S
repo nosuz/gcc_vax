@@ -19,4 +19,3 @@ _start:
         calls   $0, main
 
 halt:   halt
-        brb     halt

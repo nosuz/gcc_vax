@@ -8,7 +8,22 @@ VAX-11用のGCC C compilerのDev Containerです。
 
 サンプルプログラムが`demo`ディレクトリーにあります。
 
-### compile
+```bash
+cd demo
+make
+vax780 demo.ini
+
+# expected output
+VAX780 simulator V3.8-1
+Logging to file "demo.log"
+Hello
+Hello from VAX-11 bare-metal!
+
+HALT instruction, PC: 00001026 (BRB 1025)
+sim> [Ctrl-C]
+```
+
+### compile example
 
 ```bash
 vax-unknown-netbsdelf-gcc -nostdlib -Ttext=0x1000 test/test.c

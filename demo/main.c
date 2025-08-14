@@ -1,25 +1,40 @@
-/* hello_nostdlib.c */
-typedef unsigned int uint32_t;
+/* putc function - outputs character and waits */
+void putc(int c) {
+    int txcs;
 
-/* 出力先アドレスは仮の値（エミュレータやハード依存） */
-#define UART_BASE   0x20000000
-volatile char *const UART_TX = (volatile char *)UART_BASE;
+    /* while (!(TXCS & RDY)) {} */
+    do {
+        asm volatile ("mfpr $34, %0" : "=g" (txcs));  /* mfpr $34, %r0 */
+    } while ((txcs & 0x80) == 0);                     /* bitb $0x80, %r0; beql 1b */
 
-/* 文字送信 */
-static void putch(char c) {
-    *UART_TX = c;
+    asm volatile ("mtpr %0, $35" : : "g" (c));        /* mtpr %r0, $35 */
+    /* ret */
 }
 
-/* 文字列送信 */
-static int puts(const char *s) {
-    while (*s) {
-        putch(*s++);
+/* puts() function - outputs null-terminated string */
+int puts(const char *str) {
+    if (!str) return -1;
+
+    const char *p = str;
+    while (*p) {
+        putc(*p);
+        p++;
     }
 
-    return 0;
+    /* Add newline */
+    putc('\n');
+    return 1;
 }
 
 void main(void) {
+    putc('H');
+    putc('e');
+    putc('l');
+    putc('l');
+    putc('o');
+    putc('\r');
+    putc('\n');
+
     puts("Hello from VAX-11 bare-metal!\n");
 
     /* 無限ループで停止 */

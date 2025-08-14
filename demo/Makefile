@@ -7,6 +7,7 @@ LD      := $(CROSS)-ld
 OBJCOPY := $(CROSS)-objcopy
 OBJDUMP := $(CROSS)-objdump
 
+# CFLAGS  ?= -ffreestanding -fno-builtin -Wall -Wextra -Os
 # CFLAGS  ?= -ffreestanding -fno-builtin -Wall -Wextra -O2
 CFLAGS  ?= -ffreestanding -fno-builtin -Wall -Wextra
 ASFLAGS ?=
