@@ -102,6 +102,7 @@ RUN --mount=type=cache,target=/var/cache/apt \
     git ssh make less file ca-certificates \
     libgmp-dev libmpfr-dev libmpc-dev \
     # python3 python3-dev python3-venv python-is-python3 \
+    simh telnet file xxd \
     # System tools
     locales tzdata \
     # Configure locale
