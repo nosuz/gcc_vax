@@ -1,5 +1,3 @@
-/* Mandelbrot ASCII renderer using putc(char c) */
-
 /* putc function - outputs character and waits */
 void putc(int c) {
     int txcs;
@@ -31,59 +29,27 @@ int puts(const char *str) {
     return 1;
 }
 
+/* Mandelbrot ASCII renderer using putc(char c) */
+
 /* Map terminal size and view window as needed
 https://www.retrobrewcomputers.org/forum/index.php?t=msg&th=201&goto=4704&#msg_4704
 */
-
-/* 固定小数点演算用の定数 */
-#define FIXED_SHIFT 12              /* 12bit小数部に変更（精度vs範囲のバランス） */
-#define FIXED_ONE (1 << FIXED_SHIFT) /* 1.0 = 4096 */
-
-/* 固定小数点の乗算: (a * b) >> FIXED_SHIFT */
-int multiply_fixed(int a, int b) {
-    return (a * b) >> FIXED_SHIFT;
-}
-
-/* 整数を固定小数点に変換 */
-int int_to_fixed(int i) {
-    return i << FIXED_SHIFT;
-}
-
-/* Mandelbrot ASCII renderer using integer arithmetic only */
 int main(void) {
-    /* 定数を固定小数点で事前計算 - より簡単な方法を使用 */
-    /* 0.0458 ≈ 188/4096, 0.08333 ≈ 341/4096 */
-    int scale_x = 188;    /* 0.0458 * 4096 ≈ 188 */
-    int scale_y = 341;    /* 0.08333 * 4096 ≈ 341 */
-    int four_fixed = int_to_fixed(4);    /* 4.0 */
-
     for (int Y = -12; Y <= 12; ++Y) {           /* 10 FOR Y=-12 TO 12 */
         for (int X = -39; X <= 39; ++X) {       /* 20 FOR X=-39 TO 39 */
 
-            /* 固定小数点での座標計算 */
-            int CA = (X * scale_x) >> 0;         /* X * 0.0458 */
-            int CB = (Y * scale_y) >> 0;         /* Y * 0.08333 */
-            int A = CA;                          /* A=CA */
-            int B = CB;                          /* B=CB */
+            double CA = X * 0.0458;             /* 30 CA=X*0.0458  */
+            double CB = Y * 0.08333;            /* 40 CB=Y*0.08333 */
+            double A  = CA;                      /* 50 A=CA         */
+            double B  = CB;                      /* 60 B=CB         */
 
             int escaped = 0;                     /* 収束しない=0（内部）/発散=1 */
             int I;
             for (I = 0; I <= 15; ++I) {          /* 70 FOR I=0 TO 15 */
-                /* T=A*A-B*B+CA */
-                int A_squared = multiply_fixed(A, A);
-                int B_squared = multiply_fixed(B, B);
-                int T = A_squared - B_squared + CA;
-
-                /* B=2*A*B+CB */
-                int temp = multiply_fixed(A, B);
-                B = (temp << 1) + CB;  /* 2*A*B + CB */
-
-                /* A=T */
-                A = T;
-
-                /* IF A*A + B*B > 4 THEN ... */
-                int magnitude_squared = multiply_fixed(A, A) + multiply_fixed(B, B);
-                if (magnitude_squared > four_fixed) {
+                double T = A*A - B*B + CA;       /* 80 T=A*A-B*B+CA  */
+                B = 2.0*A*B + CB;                /* 90 B=2*A*B+CB    */
+                A = T;                            /* 100 A=T          */
+                if (A*A + B*B > 4.0) {            /* 110 IF ... > 4 THEN GOTO 200 */
                     escaped = 1;
                     break;
                 }
