@@ -9,7 +9,7 @@ VAX-11用のGCC C compilerのDev Containerです。
 サンプルプログラムが`demo`ディレクトリーにあります。
 
 ```bash
-cd demo
+cd demo/hello
 make
 vax780 demo.ini
 
